@@ -16,7 +16,7 @@ project.ext {
     groovyVersion = System.getProperty('groovyVersion') ?: '2.1.9'
     isTravisBuild = System.getenv().get("TRAVIS") == 'true'
 
-    projectVersion = "3.1.6"
+    projectVersion = "3.1.6-UCB1"
     // releaseType = "RELEASE"
     releaseType = "BUILD-SNAPSHOT"
     isCiBuild = project.hasProperty("isCiBuild")

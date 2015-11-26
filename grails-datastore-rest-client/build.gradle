@@ -1,3 +1,9 @@
+apply plugin: 'maven'
+apply plugin: 'distribution'
+
+project.group = 'org.grails'
+project.version = '3.1.6-UCB1-BUILD-SNAPSHOT'
+
 dependencies {
     provided 'javax.servlet:javax.servlet-api:3.0.1'
 //    compile("org.grails:grails-plugin-codecs:$grailsVersion") {
@@ -63,4 +69,34 @@ dependencies {
 //            project(":grails-datastore-gorm-plugin-support"),
 //            project(":grails-datastore-core")
 
+}
+
+distributions {
+    main {
+        baseName = rootProject.name
+        contents {
+            from fileTree(dir: '.', includes: [
+                    'build/libs/**',
+                    'src/**',
+                    'gradle/**',
+                    'gradelw', 'gradlew.bat',
+                    'build.gradle', 'settings.gradle', 'gradle.properties'
+            ])
+        }
+    }
+}
+distZip.dependsOn jar
+distTar.dependsOn jar
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: calnet_deploy_contextUrl + '/' + calnet_deploy_repo) {
+                authentication(
+                        userName: calnet_deploy_user,
+                        password: calnet_deploy_password
+                )
+            }
+        }
+    }
 }
